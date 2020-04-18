@@ -4,6 +4,9 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+#change ratio
+gnss_ratio = 0.5
+
 gnss_error = [[2.5,2.5,10,10,1,2]]
 gnss_rnd_error = 0.06
 odo_sys_error, odo_init_error, odo_rnd_error = 0.001, 0.1, 0.01
@@ -44,7 +47,6 @@ for p in drive_pattern:
 			GNSS_X += [x + gnss_error_x + np.random.normal(0,gnss_rnd_error)]
 			GNSS_Y += [y + gnss_error_y + np.random.normal(0,gnss_rnd_error)]
 
-gnss_ratio = 0.8
 est_x, est_y, est_the = 0, 0, odo_init_error
 EST_X, EST_Y, EST_THE = [], [], []
 odo_n, gnss_n = 1, 1
@@ -58,7 +60,8 @@ for t in np.arange(0, time, dt):
 		odo_n += 1
 		EST_X, EST_Y, EST_THE = EST_X + [est_x], EST_Y + [est_y], EST_THE + [est_the]
 	if gnss_n < len(GNSS_TIME) and t >= GNSS_TIME[gnss_n]:
-		if GNSS_X[gnss_n] < 5.5 and GNSS_Y[gnss_n] < 5.5:
+#		if GNSS_X[gnss_n] < 5.5 and GNSS_Y[gnss_n] < 5.5:
+		if True:
 			err_x, err_y = GNSS_X[gnss_n] - est_x, GNSS_Y[gnss_n] - est_y		
 			error_the = 0
 			if 	gnss_n + 1 < len(GNSS_TIME) and GNSS_X[gnss_n+1] < 5.5 and GNSS_Y[gnss_n+1] < 5.5:
